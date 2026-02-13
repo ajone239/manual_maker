@@ -1,0 +1,19 @@
+# PDF Processing
+pymupdf>=1.24.0
+
+# Embeddings and Vector Store
+# Using Ollama for embeddings (no SSL issues!)
+chromadb>=0.4.22
+rank-bm25>=0.2.2
+
+# LLM Interfaces
+anthropic>=0.18.0
+ollama>=0.1.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+numpy>=1.26.0
+
+# Output Generation
+markdown>=3.5.0
