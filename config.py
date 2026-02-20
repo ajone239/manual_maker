@@ -52,3 +52,7 @@ RELEVANCE_THRESHOLD = 0.5  # Minimum similarity score
 
 # Progressive RAG Configuration
 MAX_ITERATIONS = 3  # Maximum retrieval refinement iterations
+
+# RAG Engine LLM Configuration (tuned for gpt-oss:20b)
+RAG_LLM_TEMPERATURE = 0.7  # Higher temperature for better generation with gpt-oss
+RAG_MAX_TOKENS = 500       # More tokens to avoid truncation

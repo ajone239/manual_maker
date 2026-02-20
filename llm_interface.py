@@ -140,7 +140,16 @@ class OllamaLLM(BaseLLM):
             }
         )
 
-        return response['message']['content']
+        content = response['message']['content']
+
+        # Log empty responses for debugging
+        if not content or not content.strip():
+            print(f"⚠️  Warning: {self.model} returned empty response")
+            print(f"  Prompt length: {len(prompt)} chars")
+            print(f"  Temperature: {temperature}")
+            print(f"  Max tokens: {max_tokens}")
+
+        return content
 
 
 class LLMInterface:

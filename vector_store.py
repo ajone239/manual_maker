@@ -114,8 +114,12 @@ class HybridVectorStore:
         )
         query_embedding = response['embedding']
 
+        # Validate embedding
+        if not query_embedding or len(query_embedding) == 0:
+            raise ValueError(f"Received empty embedding from Ollama for query: '{query}'")
+
         results = self.collection.query(
-            query_embeddings=query_embedding,
+            query_embeddings=[query_embedding],
             n_results=k
         )
 
