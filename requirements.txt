@@ -3,7 +3,7 @@ pymupdf>=1.24.0
 
 # Embeddings and Vector Store
 # Using Ollama for embeddings (no SSL issues!)
-chromadb>=0.4.22
+chromadb>=1.5.1
 rank-bm25>=0.2.2
 
 # LLM Interfaces

@@ -1,5 +1,5 @@
 """LLM interface supporting both Claude API and Ollama."""
-from typing import Optional, List, Dict
+from typing import Optional, Dict
 from abc import ABC, abstractmethod
 import os
 
@@ -68,7 +68,8 @@ class ClaudeLLM(BaseLLM):
     ) -> str:
         """Generate a response using Claude."""
         if not self.is_available():
-            raise RuntimeError("Claude API not available. Check API key and anthropic package.")
+            raise RuntimeError(
+                "Claude API not available. Check API key and anthropic package.")
 
         messages = [{"role": "user", "content": prompt}]
 
@@ -244,8 +245,6 @@ if __name__ == "__main__":
 
     # Test generation
     response = llm.generate(
-        prompt="What is RAG in the context of AI?",
-        max_tokens=100,
-        temperature=0.7
+        prompt="Tersely, what is RAG in the context of AI?",
     )
     print(f"Response: {response}")

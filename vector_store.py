@@ -65,7 +65,7 @@ class HybridVectorStore:
 
         # Prepare data for ChromaDB
         texts = [chunk.text for chunk in chunks]
-        ids = [f"{chunk.source}_{chunk.page_number}_{chunk.chunk_index}" for chunk in chunks]
+        ids = [f"{c.source}_{c.page_number}_{c.chunk_index}" for c in chunks]
         metadatas = [
             {
                 "source": chunk.source,
@@ -135,7 +135,7 @@ class HybridVectorStore:
                 page_number=metadata['page_number'],
                 chunk_index=metadata['chunk_index'],
                 metadata={k: v for k, v in metadata.items()
-                         if k not in ['source', 'page_number', 'chunk_index']}
+                          if k not in ['source', 'page_number', 'chunk_index']}
             )
             matched_chunks.append((chunk, similarity))
 
@@ -189,7 +189,8 @@ class HybridVectorStore:
         keyword_results = self.keyword_search(query, k=k*2)
 
         # Create score dictionaries
-        semantic_scores = {id(chunk): score for chunk, score in semantic_results}
+        semantic_scores = {id(chunk): score for chunk,
+                           score in semantic_results}
         keyword_scores = {id(chunk): score for chunk, score in keyword_results}
 
         # Combine all unique chunks
@@ -248,12 +249,16 @@ if __name__ == "__main__":
     # store.add_documents(chunks)
 
     # Test searches
-    test_query = "installation instructions"
+    test_query = "What is the rent amount?"
     print(f"\nTesting hybrid search for: '{test_query}'")
     results = store.hybrid_search(test_query, k=5)
 
-    for i, (chunk, score, breakdown) in enumerate(results, 1):
+    print(len(results))
+
+    for i, (c, score, breakdown) in enumerate(results, 1):
         print(f"\n--- Result {i} (score: {score:.3f}) ---")
-        print(f"Source: {chunk.source}, Page: {chunk.page_number}")
-        print(f"Semantic: {breakdown['semantic']:.3f}, Keyword: {breakdown['keyword']:.3f}")
-        print(f"Text: {chunk.text[:150]}...")
+        print(f"Source: {c.source}, Page: {c.page_number}")
+        s = breakdown['semantic']
+        k = breakdown['keyword']
+        print(f"Semantic: {s:.3f}, Keyword: {k:.3f}")
+        print(f"Text: {c.text}...")

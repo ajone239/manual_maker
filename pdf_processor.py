@@ -52,7 +52,12 @@ class PDFProcessor:
         cleaned_lines = [line for line in lines if len(line.strip()) > 3]
         return '\n'.join(cleaned_lines)
 
-    def chunk_text(self, text: str, source: str, page_number: int) -> List[DocumentChunk]:
+    def chunk_text(
+        self,
+        text: str,
+        source: str,
+        page_number: int
+    ) -> List[DocumentChunk]:
         """
         Chunk text with overlap to preserve context.
 
@@ -68,7 +73,8 @@ class PDFProcessor:
 
         for sentence in sentences:
             # If adding this sentence would exceed chunk size
-            if len(current_chunk) + len(sentence) > self.chunk_size and current_chunk:
+            if len(current_chunk) + len(sentence) > self.chunk_size \
+                    and current_chunk:
                 # Save current chunk
                 chunks.append(DocumentChunk(
                     text=current_chunk.strip(),
@@ -83,7 +89,8 @@ class PDFProcessor:
 
                 # Start new chunk with overlap
                 # Get last N characters for overlap
-                overlap_text = current_chunk[-self.overlap:] if len(current_chunk) > self.overlap else current_chunk
+                overlap_text = current_chunk[-self.overlap:] if len(
+                    current_chunk) > self.overlap else current_chunk
                 current_chunk = overlap_text + " " + sentence
                 chunk_index += 1
             else:
@@ -135,7 +142,9 @@ class PDFProcessor:
             chunks = self.process_pdf(pdf_path)
             all_chunks.extend(chunks)
 
-        print(f"\nTotal: {len(all_chunks)} chunks from {len(pdf_files)} documents")
+        print(
+            f"\nTot: {len(all_chunks)} chunks from {len(pdf_files)} documents"
+        )
         return all_chunks
 
 
